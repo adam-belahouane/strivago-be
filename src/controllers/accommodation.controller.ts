@@ -16,8 +16,14 @@ accommodationRouter
 })
 .post("/", async (req, res)=>{
   try {
-    console.log("the request body is", req.body)
-    let newAccommodation = new AccommodationModel(req.body)
+    // Refactor this later!
+    // Request body contains city as a string, eg. "Paris"
+    // Check if it already exists
+    // If not, create a new destination
+    // Then save the city id to the req.body.city information
+    // Save the new accommodation.
+    // Save the accommodation id to city accommodations array.
+    let newAccommodation = new AccommodationModel(req.body);
     await newAccommodation.save()
     res.status(201).send(newAccommodation);
   } catch (error) {
