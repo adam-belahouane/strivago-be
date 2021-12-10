@@ -1,6 +1,7 @@
 import express from "express";
 import AccommodationModel from "../models/accommodation/model";
 
+
 const accommodationRouter = express.Router();
 
 accommodationRouter
@@ -19,8 +20,6 @@ accommodationRouter
     let newAccommodation = new AccommodationModel(req.body)
     await newAccommodation.save()
     res.status(201).send(newAccommodation);
-    
-   
   } catch (error) {
     console.log(error);
     res.sendStatus(400);
@@ -29,11 +28,7 @@ accommodationRouter
 .get("/:id", async (req, res) => {
   try {
     const accommodation = await AccommodationModel.findById(req.params.id)
-
-    
-   res.send(accommodation)
-      
-    
+    res.send(accommodation)
   } catch (error) {
     console.log(error)
     res.status(404).send()
