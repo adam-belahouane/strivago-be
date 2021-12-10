@@ -44,7 +44,7 @@ describe("Test accommodation endpoints", () => {
     expect(response.body.length).toBeGreaterThan(0);
   })
 
-  let id = null
+  let id: null | string = null
 
   it("POST /accommodation - it should add a new accomodation", async()=> {
 
@@ -78,6 +78,46 @@ describe("Test accommodation endpoints", () => {
 
     expect(response.status).toBe(400)
   })
+
+  it("GET by Id /accommodation - it should return object with this Id", async () => {
+    const response = await request.get(`/accommodation/${id}`)
+
+    console.log(response.body)
+    expect(response.status).toBe(200);
+    expect(response.body._id).toBeDefined();
+    expect(response.body.name).toBeDefined()
+    expect(response.body.name).toBe("MilanHotel");
+    expect(response.body.description).toBeDefined();
+    expect(response.body.description).toBe("Beautiful place.");
+    expect(response.body.maxGuests).toBeDefined();
+    expect(response.body.maxGuests).toBe(5);
+    expect(response.body.city).toBeDefined();
+    expect(response.body.city).toBe("London");
+  })
+
+  it("GET by Id /accommodation - Should return 404 if Id not found", async () => {
+    const response = await request.get(`/accommodation/87213409237`)
+    expect(response.status).toBe(404)
+
+  })
+
+  it("PUT /accommodation - Should check that the put works", async () => {
+    const response = await request.put(`/accommodation/${id}`).send({
+      name:"LondonHotel"
+    })  
+
+    expect(response.body.name).toBeDefined()
+    expect(response.body.name).toBe("LondonHotel");
+
+  })
+
+  it("PUT /accommodation - Should return 404 if Id not found", async () => {
+    const response = await request.get(`/accommodation/87213409237`)
+    expect(response.status).toBe(404)
+
+  })
+
+
 
   afterAll(done => {
     mongoose.connection.dropDatabase()

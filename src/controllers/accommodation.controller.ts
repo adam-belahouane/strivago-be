@@ -26,6 +26,28 @@ accommodationRouter
     res.sendStatus(400);
   }
 })
+.get("/:id", async (req, res) => {
+  try {
+    const accommodation = await AccommodationModel.findById(req.params.id)
+
+    
+   res.send(accommodation)
+      
+    
+  } catch (error) {
+    console.log(error)
+    res.status(404).send()
+  }
+})
+.put("/:id", async (req, res) => {
+  try {
+    const accommodation = await AccommodationModel.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    res.send(accommodation)
+  } catch (error) {
+    console.log(error)
+    res.status(404).send()
+  }
+})
 
 
 export default accommodationRouter;
