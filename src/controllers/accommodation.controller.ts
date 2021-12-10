@@ -10,10 +10,22 @@ accommodationRouter
     res.send(accommodations);
   } catch (error) {
     console.log(error);
-    res.send(404);
+    res.sendStatus(404);
   }
 })
-//.post()
-//
+.post("/", async (req, res)=>{
+  try {
+    console.log("the request body is", req.body)
+    let newAccommodation = new AccommodationModel(req.body)
+    await newAccommodation.save()
+    res.status(201).send(newAccommodation);
+    
+   
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(400);
+  }
+})
+
 
 export default accommodationRouter;

@@ -44,8 +44,40 @@ describe("Test accommodation endpoints", () => {
     expect(response.body.length).toBeGreaterThan(0);
   })
 
+  let id = null
 
+  it("POST /accommodation - it should add a new accomodation", async()=> {
 
+    const response = await request.post("/accommodation").send({
+      name: "MilanHotel",
+      description: "Beautiful place.",
+      maxGuests: 5,
+      city: "London"
+    })
+    console.log(response.body)
+    expect(response.status).toBe(201);
+    expect(response.body._id).toBeDefined();
+    expect(response.body.name).toBeDefined()
+    expect(response.body.name).toBe("MilanHotel");
+    expect(response.body.description).toBeDefined();
+    expect(response.body.description).toBe("Beautiful place.");
+    expect(response.body.maxGuests).toBeDefined();
+    expect(response.body.maxGuests).toBe(5);
+    expect(response.body.city).toBeDefined();
+    expect(response.body.city).toBe("London");
+    
+    id = response.body._id
+
+  })
+ 
+  it("POST /accommodation - it should send 400 for invalid data", async() => {
+
+    const response = await request.post("/accommodation").send({
+      name: 7
+    })
+
+    expect(response.status).toBe(400)
+  })
 
   afterAll(done => {
     mongoose.connection.dropDatabase()
