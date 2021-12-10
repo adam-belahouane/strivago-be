@@ -43,6 +43,15 @@ accommodationRouter
     res.status(404).send()
   }
 })
+.delete("/:id", async (req,res) => {
+  try {
+    await AccommodationModel.findByIdAndDelete(req.params.id);
+    res.sendStatus(204);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(404);
+  }
+})
 
 
 export default accommodationRouter;

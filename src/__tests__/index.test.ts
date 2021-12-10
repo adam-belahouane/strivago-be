@@ -117,6 +117,16 @@ describe("Test accommodation endpoints", () => {
 
   })
 
+  it("DELETE /accommodation/:id - Should delete accommodation by id", async() => {
+    const response = await request.delete(`/accommodation/${id}`);
+    expect(response.status).toBe(204);
+  })
+
+  it("DELETE /accommodation/:id - Should return 404 if invalid id", async () => {
+    const response = await request.delete("/accommodation/600");
+    expect(response.status).toBe(404);
+  })
+
 
 
   afterAll(done => {
